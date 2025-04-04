@@ -1,0 +1,9 @@
+LICENSE
+Predict_Nikkei.py
+README.md
+pyproject.toml
+predict_nikkei.egg-info/PKG-INFO
+predict_nikkei.egg-info/SOURCES.txt
+predict_nikkei.egg-info/dependency_links.txt
+predict_nikkei.egg-info/requires.txt
+predict_nikkei.egg-info/top_level.txt

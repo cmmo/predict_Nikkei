@@ -21,12 +21,23 @@ oil_data = yf.download('CL=F', start=start_date, end=end_date)
 print(f"FX data: {fx_data.shape}, Nikkei data: {nikkei_data.shape}, S&P 500 data: {sp500_data.shape}, Oil data: {oil_data.shape}")
 
 # Step 2: Creating a DataFrame and aligning all datasets by their dates, adding lagged Nikkei features
-data = pd.DataFrame({
-    'JPY_USD': fx_data['Close'],
-    'Nikkei225': nikkei_data['Close'],
-    'SP500': sp500_data['Close'],
-    'Oil': oil_data['Close']
-})
+# First create individual DataFrames for each dataset
+fx_df = pd.DataFrame(fx_data['Close'])
+nikkei_df = pd.DataFrame(nikkei_data['Close'])
+sp500_df = pd.DataFrame(sp500_data['Close'])
+oil_df = pd.DataFrame(oil_data['Close'])
+
+# Merge all DataFrames on their index (date)
+data = fx_df.join(nikkei_df, how='inner')
+data = data.join(sp500_df, how='inner')
+data = data.join(oil_df, how='inner')
+
+# Rename columns to our desired names
+data.columns = ['JPY_USD', 'Nikkei225', 'SP500', 'Oil']
+
+# Debug: Print final DataFrame structure
+print("\nFinal DataFrame columns:", data.columns)
+print("Final DataFrame shape:", data.shape)
 
 # Creating lagged Nikkei values (e.g., 1-day lag and 2-day lag)
 data['Nikkei_Lag_1'] = data['Nikkei225'].shift(1)  # Previous day's Nikkei
