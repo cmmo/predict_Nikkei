@@ -8,7 +8,6 @@ RUN pip install --no-cache-dir uv
 
 COPY requirements.txt .
 
-# Create virtual environment and install packages with uv
 RUN uv pip install --no-cache-dir -r requirements.txt
     
 COPY . .
